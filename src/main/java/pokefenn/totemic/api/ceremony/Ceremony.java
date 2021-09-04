@@ -11,6 +11,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import pokefenn.totemic.api.music.MusicInstrument;
+import pokefenn.totemic.configuration.ModConfig;
 
 public abstract class Ceremony extends IForgeRegistryEntry.Impl<Ceremony>
 {
@@ -151,18 +152,19 @@ public abstract class Ceremony extends IForgeRegistryEntry.Impl<Ceremony>
      */
     public int getAdjustedMaxStartupTime(EnumDifficulty diff)
     {
+        float modifier = (float) ModConfig.general.ceremonyTimeModifier;
         switch(diff)
         {
         case PEACEFUL:
         case EASY:
-            return (int) (1.1F * getMaxStartupTime());
+            return (int) (modifier * 1.1F * getMaxStartupTime());
 
         case NORMAL:
         default:
-            return getMaxStartupTime();
+            return (int) (modifier * getMaxStartupTime());
 
         case HARD:
-            return (int) (0.875F * getMaxStartupTime());
+            return (int) (modifier * 0.875F * getMaxStartupTime());
         }
     }
 
